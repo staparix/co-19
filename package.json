@@ -1,13 +1,17 @@
 {
   "scripts": {
     "start:dev": "netlify dev",
-    "build": "gatsby build"
+    "build": "gatsby build",
+    "format": "prettier --write --check './src/**/*.{ts,tsx}'"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
     "dotenv": "^8.2.0",
     "gatsby": "^2.19.43",
     "gatsby-plugin-typescript": "^2.2.3",
+    "prettier": "^1.19.1",
     "react": "^16.13.0",
+    "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
     "typescript": "^3.8.3"
   },
