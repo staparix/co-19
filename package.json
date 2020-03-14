@@ -1,9 +1,18 @@
 {
+  "scripts": {
+    "start:dev": "netlify dev",
+    "build": "gatsby build"
+  },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "gatsby": "^2.17.0",
-    "mailgun-js": "^0.22.0",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "gatsby": "^2.19.43",
+    "gatsby-plugin-typescript": "^2.2.3",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "typescript": "^3.8.3"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5"
   }
 }

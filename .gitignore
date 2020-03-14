@@ -3,6 +3,7 @@ node_modules
 !.env.EXAMPLE
 public
 .cache
+.idea
 
 # Local Netlify folder
 .netlify

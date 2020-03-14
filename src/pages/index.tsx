@@ -1,11 +1,9 @@
-import React from 'react';
-import Form from '../components/form';
+import * as React from 'react';
 
 import '../global.css';
 
 export default () => (
   <>
-    <h1>Send a Message</h1>
-    <Form />
+    <h1>covid-19</h1>
   </>
 );
