@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Baloo Chettan 2', "sans-serif";
 }
 
 html {
@@ -13,4 +14,22 @@ h1 {
   font-size: 1.75rem;
   margin-top: 2rem;
   text-align: center;
+}
+
+body {
+  background-size: cover;
+  height: 100%;
+  overflow: hidden;
+}
+
+body::after {
+  content: "";
+  background: url("https://hdwallsource.com/img/2014/3/free-street-wallpaper-36545-37379-hd-wallpapers.jpg") no-repeat center center fixed;
+  opacity: 0.2;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }

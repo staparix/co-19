@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Table } from "react-bootstrap";
+import PieChart from "react-minimal-pie-chart";
+
 type Response = {
   cases: number;
   deaths: number;
@@ -28,23 +29,20 @@ function useGlobalStats() {
 export const GlobalStats: React.FC = () => {
   const globalData = useGlobalStats();
   return (
-    <Table variant="dark">
-      <table>
-        <thead>
-          <tr>
-            <th>Cases</th>
-            <th>Deaths</th>
-            <th>Recovered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{globalData.cases}</td>
-            <td>{globalData.deaths}</td>
-            <td>{globalData.recovered}</td>
-          </tr>
-        </tbody>
-      </table>
-    </Table>
+    <PieChart
+      label={({ data, dataIndex }) => (
+        `${data[dataIndex].title} - ${data[dataIndex].value}`
+      )}
+      labelPosition={50}
+      labelStyle={{
+        fontSize: "5px",
+        fill: "#fff"
+      }}
+      data={[
+        { title: "Cases", value: globalData.cases, color: "#E38627" },
+        { title: "Recovered", value: globalData.recovered, color: "#C13C37" },
+        { title: "Deaths", value: globalData.deaths, color: "#6A2135" }
+      ]}
+    />
   );
 };

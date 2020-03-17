@@ -1,12 +1,14 @@
 import * as React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import { Navigation } from "./Navigation";
 import { Container } from "react-bootstrap";
 
 export const MainLayout: React.FC = props => {
   return (
-    <Container>
+    <div>
       <Navigation />
-      {props.children}
-    </Container>
+      <Container>{props.children}</Container>
+    </div>
   );
 };
