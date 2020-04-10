@@ -1,7 +1,19 @@
 import { createWSConnection } from "./ws";
-import { handleIncomingMessages } from "./incomingMessages";
-export function init() {
-    const wsStream = createWSConnection();
+import {
+  createMessageHandler,
+} from "./incomingMessages";
+import { createRootStore } from "../store/createRootStore";
+import { createMessageTransport } from "./outcomeMessages";
 
-    wsStream.onValue(message => handleIncomingMessages(message))
+export function init() {
+  const { incomingMessages, ws } = createWSConnection();
+  const messageTransport = createMessageTransport(ws);
+  const rootStore = createRootStore(messageTransport);
+  const handleMessages = createMessageHandler(rootStore);
+
+  incomingMessages.onValue(handleMessages);
+
+  return {
+    rootStore: rootStore
+  };
 }

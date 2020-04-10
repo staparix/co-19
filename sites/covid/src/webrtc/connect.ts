@@ -1,37 +1,10 @@
-import { Client, createWSConnection } from "../webrtc/ws";
-
 let localConnection: RTCPeerConnection | null;
 let remoteConnection: RTCPeerConnection | null;
 let sendChannel: RTCDataChannel;
 let receiveChannel: RTCDataChannel;
 let ws: WebSocket;
 
-export const init = async () => {
-  try {
-    const client = await createWSConnection();
-    console.log("client created ", client.id);
-    return {
-      call: createCall(client)
-    };
-  } catch (e) {
-    console.error("Could not create client ");
-    throw new Error(e);
-  }
-
-  // ws.onmessage = (message: MessageEvent) => {
-  //   if (typeof message.data === "string" && message.data[0] !== "{") {
-  //     console.log("message from ws: ", message.data);
-  //     return;
-  //   }
-  //   const parsedData = JSON.parse(message.data);
-  //   switch (parsedData.type) {
-  //     case "p2p.offer":
-  //       handleOffer(parsedData.data);
-  //       break;
-  //   }
-  // };
-};
-
+// @ts-ignore
 function createCall(client: Client) {
   return function call() {
     const localConnection = createConnection();
@@ -54,22 +27,19 @@ export function tempStay() {
   // };
 }
 
-function createConnection() {
-  const servers = undefined;
-  return new RTCPeerConnection(servers);
-}
 
+// @ts-ignore
 function handleOffer(offer: any) {
   console.log("client have offer from other browser...");
   console.log(offer);
 
   const remoteConnection = createConnection();
+  // @ts-ignore
   remoteConnection.setRemoteDescription();
 }
 
 // @ts-ignore
 function createConnection2() {
-  ws.send(JSON.stringify({ name: "Hello" }));
   const servers = undefined;
   localConnection = new RTCPeerConnection(servers);
   console.log("Created local peer connection object localConnection");
@@ -100,11 +70,13 @@ function onCreateSessionDescriptionError(error: object) {
   console.log("Failed to create session description: " + error.toString());
 }
 
+// @ts-ignore
 function sendData() {
   sendChannel.send("Some data");
   console.log("Sent Data: " + "Send test file");
 }
 
+// @ts-ignore
 function closeDataChannels() {
   console.log("Closing data channels");
   sendChannel.close();
@@ -121,10 +93,7 @@ function closeDataChannels() {
 function gotDescription1(desc: RTCSessionDescriptionInit) {
   ws.send("offer created");
   localConnection!.setLocalDescription(desc);
-  const wsOffer = createOfferWsMessage(desc);
-  ws.send(wsOffer);
 
-  console.log(`Offer from localConnection\n${desc.sdp}`);
   remoteConnection!.setRemoteDescription(desc);
   remoteConnection!
     .createAnswer()

@@ -23,7 +23,7 @@ export type MessageTypes = keyof IncomingMessages;
 export const createWSConnection = () => {
   console.log("init ws connection");
   const ws = new WebSocket(wsUrl);
-  return Kefir.stream<unknown, any>(emitter => {
+  const incomeStream = Kefir.stream<unknown, any>(emitter => {
     ws.onopen = () => {
       console.log("client connected to ws...");
     };
@@ -35,29 +35,22 @@ export const createWSConnection = () => {
     ws.onmessage = (message: MessageEvent) => {
       try {
         const payload = JSON.parse(message.data);
-        emitter.emit({
-          type: payload.type,
-          payload: payload.data
-        });
+        if (payload.type === undefined) {
+          emitter.emit(message);
+        } else {
+          emitter.emit({
+            type: payload.type,
+            payload: payload.data
+          });
+        }
       } catch (e) {
         console.error("Could not parse message");
       }
     };
   });
+
+  return {
+    incomingMessages: incomeStream,
+    ws: ws
+  };
 };
-
-export class Client {
-  constructor(public id: string, private ws: WebSocket) {}
-
-  public sendOffer(offer: RTCSessionDescriptionInit) {
-    function createOfferWsMessage(data: RTCSessionDescriptionInit) {
-      return JSON.stringify({
-        type: "p2p.offer",
-        data: data
-      });
-    }
-    const wsOffer = createOfferWsMessage(offer);
-    this.ws.send(wsOffer);
-    console.log("offer send over ws");
-  }
-}
