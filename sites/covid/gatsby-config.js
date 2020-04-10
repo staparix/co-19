@@ -1,5 +1,6 @@
 module.exports = {
   plugins: [
+    `gatsby-theme-blog`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-typescript`

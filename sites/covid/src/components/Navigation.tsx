@@ -12,6 +12,9 @@ export const Navigation: React.FC = () => {
           <Nav.Link>
             <Link activeClassName={"someClass"} to="/stats">Statistics</Link>
           </Nav.Link>
+            <Nav.Link>
+                <Link activeClassName={"someClass"} to="/game">Game</Link>
+            </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
