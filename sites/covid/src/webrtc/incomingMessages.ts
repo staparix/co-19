@@ -9,11 +9,21 @@ type Handlers = {
 };
 
 const handlers: Handlers = {
-  offer: ({ payload }) => {
-    console.log("new offer ", payload);
+  initUser: ({ payload }, { currentPlayer }) => {
+    console.log("[ws handler] handle init user", payload);
+    currentPlayer.setUserId(payload.userId);
   },
-  "init.user": ({ payload }) => {
-    console.log("create new user ", payload);
+  offerRequest: async ({ payload }, { currentPlayer }) => {
+    console.log("[ws handler] handle offer", payload);
+    await currentPlayer.peer.createAnswer(payload.offer);
+  },
+  answerRequest: async ({ payload }, { currentPlayer }) => {
+    console.log("[ws handler] handle answer", payload);
+    await currentPlayer.peer.setAnswer(payload.offer);
+  },
+  iceCandidate: async ({ payload }, { currentPlayer }) => {
+    console.log("[ws handler] handle ice candidate", payload);
+    await currentPlayer.peer.setIceCandidate(payload.iceCandidate);
   }
 };
 

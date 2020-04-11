@@ -1,9 +1,12 @@
+import { configure } from "mobx";
 import { createWSConnection } from "./ws";
-import {
-  createMessageHandler,
-} from "./incomingMessages";
+import { createMessageHandler } from "./incomingMessages";
 import { createRootStore } from "../store/createRootStore";
 import { createMessageTransport } from "./outcomeMessages";
+
+configure({
+  enforceActions: "always"
+});
 
 export function init() {
   const { incomingMessages, ws } = createWSConnection();

@@ -2,8 +2,10 @@ import * as Kefir from "kefir";
 const wsUrl = "ws://localhost:5000";
 
 export type IncomingMessages = {
-  "init.user": InitUserPayload;
-  offer: ClientOfferPayload;
+  initUser: InitUserPayload;
+  offerRequest: OfferRequestPayload;
+  answerRequest: OfferRequestPayload;
+  iceCandidate: IceCandidatePayload;
 };
 
 export type InitUserPayload = {
@@ -12,10 +14,18 @@ export type InitUserPayload = {
   };
 };
 
-export type ClientOfferPayload = {
+export type OfferRequestPayload = {
   payload: {
-    offer: { name: string };
+    userId: string;
+    offer: RTCSessionDescriptionInit
   };
+};
+
+type IceCandidatePayload = {
+  payload: {
+    iceCandidate: RTCIceCandidate;
+    userId: string;
+  }
 };
 
 export type MessageTypes = keyof IncomingMessages;
@@ -40,7 +50,7 @@ export const createWSConnection = () => {
         } else {
           emitter.emit({
             type: payload.type,
-            payload: payload.data
+            payload: payload.payload
           });
         }
       } catch (e) {
